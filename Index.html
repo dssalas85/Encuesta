@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Satisfacción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        .emoji-container {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .emoji-label {
+            font-size: 40px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .emoji-label:hover {
+            transform: scale(1.2);
+        }
+        /* Colores para los emojis */
+        .emoji-label[data-value="5"] {
+            color: #28a745; /* Verde */
+        }
+        .emoji-label[data-value="4"] {
+            color: #7cc076; /* Verde claro */
+        }
+        .emoji-label[data-value="3"] {
+            color: #ffc107; /* Amarillo */
+        }
+        .emoji-label[data-value="2"] {
+            color: #fd7e14; /* Naranja */
+        }
+        .emoji-label[data-value="1"] {
+            color: #dc3545; /* Rojo */
+        }
+        #thank-you {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745;
+        }
+    </style>
+    <script>
+        function submitRating(value) {
+            // Muestra el mensaje de agradecimiento
+            const thankYouMessage = document.getElementById("thank-you");
+            thankYouMessage.style.display = "block";
+            thankYouMessage.innerText = "¡Gracias por su confianza! / Thank you for your trust!";
+            
+            // Oculta los emojis después de un breve periodo
+            const emojis = document.querySelector(".emoji-container");
+            emojis.style.display = "none";
+
+            // Restablece la encuesta después de 3 segundos
+            setTimeout(() => {
+                thankYouMessage.style.display = "none";
+                emojis.style.display = "flex";
+            }, 3000);
+        }
+
+        // Hacer que funcione con eventos táctiles
+        document.addEventListener("DOMContentLoaded", () => {
+            const emojis = document.querySelectorAll(".emoji-label");
+            emojis.forEach(emoji => {
+                emoji.addEventListener("touchstart", () => {
+                    const value = emoji.getAttribute("data-value");
+                    submitRating(value);
+                });
+                emoji.addEventListener("click", () => {
+                    const value = emoji.getAttribute("data-value");
+                    submitRating(value);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>¿Qué tan satisfecho estás con nuestro servicio?</h1>
+    <div class="emoji-container">
+        <span class="emoji-label" data-value="5">😍</span>
+        <span class="emoji-label" data-value="4">🙂</span>
+        <span class="emoji-label" data-value="3">😐</span>
+        <span class="emoji-label" data-value="2">😟</span>
+        <span class="emoji-label" data-value="1">😡</span>
+    </div>
+    <div id="thank-you">¡Gracias por su confianza! / Thank you for your trust!</div>
+</body>
+</html>
